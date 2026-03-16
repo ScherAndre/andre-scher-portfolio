@@ -51,32 +51,6 @@ andre-scher-portfolio/
 
 ---
 
-## 🚀 Como rodar localmente
-
-```bash
-# Clone o repositório
-git clone https://github.com/ScherAndre/andre-scher-portfolio.git
-
-# Acesse a pasta
-cd andre-scher-portfolio
-
-# Abra no navegador
-# Basta abrir o arquivo index.html direto no browser
-# Ou use a extensão Live Server no VS Code
-```
-
----
-
-## 📦 Deploy no GitHub Pages
-
-1. Vá em **Settings** do repositório
-2. Clique em **Pages** no menu lateral
-3. Em **Source**, selecione a branch `main`
-4. Clique em **Save**
-5. Aguarde alguns segundos — seu site estará no ar em `https://scherandre.github.io/andre-scher-portfolio`
-
----
-
 ## 📬 Contato
 
 Estou em busca da minha primeira oportunidade como desenvolvedor!
