@@ -2,25 +2,25 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>André Scher — Desenvolvedor Web</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>André Scher — Desenvolvedor Back-End</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0a0f;
-      --bg2: #111118;
-      --bg3: #1a1a24;
-      --accent: #00e5a0;
-      --accent2: #7b61ff;
-      --text: #e8e8f0;
-      --muted: #6b6b80;
-      --border: #1e1e2e;
-      --card: #13131c;
-      --mono: 'Space Mono', monospace;
-      --sans: 'Syne', sans-serif;
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --bg3: #161616;
+      --border: #222222;
+      --text: #e8e8e0;
+      --muted: #666660;
+      --accent: #c8f060;
+      --accent2: #60c8f0;
+      --accent3: #f0a060;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
     }
 
     html { scroll-behavior: smooth; }
@@ -28,666 +28,787 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--sans);
-      line-height: 1.6;
-      overflow-x: hidden;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.7;
+      cursor: default;
     }
 
-    /* NOISE OVERLAY */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 9999;
-    }
+    ::selection { background: var(--accent); color: #000; }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
     /* NAV */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 1.2rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(10,10,15,0.85);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(10,10,10,0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
-
     .nav-logo {
-      font-family: var(--mono);
-      font-size: 0.9rem;
-      color: var(--accent);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      color: var(--text);
       text-decoration: none;
-      letter-spacing: 0.05em;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
     .nav-links a {
-      font-family: var(--mono);
-      font-size: 0.8rem;
       color: var(--muted);
       text-decoration: none;
-      transition: color 0.2s;
+      font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      transition: color 0.2s;
     }
-
     .nav-links a:hover { color: var(--accent); }
+    .nav-status {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
     /* HERO */
     #hero {
       min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 6rem 2rem 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 48px 80px;
       position: relative;
       overflow: hidden;
     }
-
-    .hero-grid-bg {
-      position: absolute;
-      inset: 0;
+    .hero-grid {
+      position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(0,229,160,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,160,0.04) 1px, transparent 1px);
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+      opacity: 0.3;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
     }
-
-    .hero-glow {
-      position: absolute;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      text-align: center;
-      max-width: 800px;
-    }
-
-    .hero-tag {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--accent);
+    .hero-label {
+      font-size: 11px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.2s forwards;
+      color: var(--accent);
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease both;
     }
-
     .hero-name {
-      font-size: clamp(3rem, 8vw, 6rem);
+      font-family: var(--font-display);
+      font-size: clamp(52px, 8vw, 96px);
       font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.4s forwards;
+      line-height: 0.95;
+      letter-spacing: -3px;
+      color: var(--text);
+      animation: fadeUp 0.8s 0.1s ease both;
     }
-
-    .hero-name span { color: var(--accent); }
-
+    .hero-name em {
+      font-style: normal;
+      color: var(--accent);
+      display: block;
+    }
     .hero-role {
-      font-family: var(--mono);
-      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      margin-top: 28px;
+      font-size: 15px;
       color: var(--muted);
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.6s forwards;
+      max-width: 520px;
+      line-height: 1.8;
+      animation: fadeUp 0.8s 0.2s ease both;
     }
-
-    .hero-role .cursor {
-      display: inline-block;
-      width: 2px; height: 1em;
-      background: var(--accent);
-      margin-left: 4px;
-      vertical-align: middle;
-      animation: blink 1s infinite;
+    .hero-role strong { color: var(--text); font-weight: 500; }
+    .hero-cta {
+      margin-top: 40px;
+      display: flex; gap: 16px; flex-wrap: wrap;
+      animation: fadeUp 0.8s 0.3s ease both;
     }
-
-    .hero-btns {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.8s forwards;
-    }
-
     .btn {
-      font-family: var(--mono);
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 0.8rem 1.8rem;
-      border-radius: 4px;
       text-decoration: none;
+      border-radius: 2px;
       transition: all 0.2s;
       cursor: pointer;
       border: none;
     }
-
     .btn-primary {
       background: var(--accent);
-      color: var(--bg);
-      font-weight: 700;
+      color: #000;
+      font-weight: 500;
     }
-
-    .btn-primary:hover {
-      background: #00ffb3;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(0,229,160,0.3);
-    }
-
-    .btn-outline {
+    .btn-primary:hover { background: #d8ff70; transform: translateY(-2px); }
+    .btn-ghost {
       background: transparent;
       color: var(--text);
       border: 1px solid var(--border);
     }
-
-    .btn-outline:hover {
-      border-color: var(--accent);
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .hero-stats {
+      margin-top: 72px;
+      display: flex; gap: 48px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 800;
       color: var(--accent);
-      transform: translateY(-2px);
+      letter-spacing: -1px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 2px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* SECTIONS */
-    section {
-      padding: 6rem 2rem;
-      max-width: 1000px;
-      margin: 0 auto;
+    section { padding: 100px 48px; }
+    .section-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 64px;
     }
-
-    .section-label {
-      font-family: var(--mono);
-      font-size: 0.7rem;
+    .section-num {
+      font-size: 11px;
       color: var(--accent);
-      letter-spacing: 0.2em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 0.8rem;
     }
-
     .section-title {
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 42px);
       font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 3rem;
+      letter-spacing: -1.5px;
+      color: var(--text);
+    }
+    .section-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
     }
 
     /* SOBRE */
-    .about-grid {
+    #sobre { background: var(--bg2); }
+    .sobre-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+      gap: 80px;
       align-items: start;
     }
-
-    .about-text p {
+    .sobre-text p {
       color: var(--muted);
-      margin-bottom: 1rem;
-      font-size: 1rem;
+      line-height: 1.9;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .sobre-text p strong { color: var(--text); font-weight: 500; }
+    .sobre-text p a { color: var(--accent2); text-decoration: none; }
+    .sobre-text p a:hover { text-decoration: underline; }
+
+    /* EXPERIÊNCIA */
+    .exp-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 28px 32px;
+      border-radius: 2px;
+      transition: border-color 0.2s;
+    }
+    .exp-card:hover { border-left-color: var(--accent2); }
+    .exp-company {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+    .exp-company a { color: inherit; text-decoration: none; }
+    .exp-company a:hover { color: var(--accent); }
+    .exp-role {
+      font-size: 12px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+    .exp-period {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+      margin-bottom: 20px;
+    }
+    .exp-desc {
+      color: var(--muted);
+      font-size: 13px;
       line-height: 1.8;
     }
-
-    .about-text p strong { color: var(--text); }
-
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+    .exp-tags {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-top: 20px;
     }
-
-    .stat-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.5rem;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .stat-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-    }
-
-    .stat-num {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--accent);
-      font-family: var(--mono);
-      line-height: 1;
-      margin-bottom: 0.3rem;
-    }
-
-    .stat-desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-family: var(--mono);
+    .tag {
+      padding: 4px 10px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      border-radius: 2px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
     }
+    .tag.accent { border-color: var(--accent); color: var(--accent); }
+    .tag.accent2 { border-color: var(--accent2); color: var(--accent2); }
 
     /* SKILLS */
-    #skills { background: var(--bg2); max-width: 100%; padding: 6rem 2rem; }
-    #skills > * { max-width: 1000px; margin-left: auto; margin-right: auto; }
-    #skills .section-title { max-width: 1000px; margin: 0 auto 3rem; }
-    #skills .section-label { max-width: 1000px; margin: 0 auto 0.8rem; }
-
+    #skills { background: var(--bg); }
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 1rem;
-      max-width: 1000px;
-      margin: 0 auto;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
     }
-
-    .skill-chip {
-      background: var(--card);
+    .skill-group {
+      background: var(--bg2);
+      padding: 32px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      transition: all 0.2s;
-      cursor: default;
     }
-
-    .skill-chip:hover {
-      border-color: var(--accent);
-      background: rgba(0,229,160,0.05);
-      transform: translateY(-2px);
+    .skill-group:first-child { border-left: 3px solid var(--accent); }
+    .skill-group:nth-child(2) { border-left: 3px solid var(--accent2); }
+    .skill-group:nth-child(3) { border-left: 3px solid var(--accent3); }
+    .skill-group-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 24px;
     }
-
-    .skill-icon { font-size: 1.3rem; }
+    .skill-group:first-child .skill-group-title { color: var(--accent); }
+    .skill-group:nth-child(2) .skill-group-title { color: var(--accent2); }
+    .skill-group:nth-child(3) .skill-group-title { color: var(--accent3); }
+    .skill-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .skill-item:last-child { border-bottom: none; }
+    .skill-item span:first-child { color: var(--text); }
+    .skill-level {
+      display: flex; gap: 3px;
+    }
+    .skill-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--border);
+    }
+    .skill-dot.filled { background: var(--accent); }
+    .skill-group:nth-child(2) .skill-dot.filled { background: var(--accent2); }
+    .skill-group:nth-child(3) .skill-dot.filled { background: var(--accent3); }
 
     /* PROJETOS */
-    .projects-grid {
+    #projetos { background: var(--bg2); }
+    .projetos-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
     }
-
-    .project-card {
-      background: var(--card);
+    .projeto-card {
+      background: var(--bg3);
+      padding: 36px;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.8rem;
-      transition: all 0.25s;
+      text-decoration: none;
+      display: block;
       position: relative;
       overflow: hidden;
-      text-decoration: none;
-      color: var(--text);
-      display: block;
+      transition: all 0.25s;
+      group: true;
     }
-
-    .project-card::before {
+    .projeto-card::before {
       content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(0,229,160,0.06) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .project-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    }
-
-    .project-card:hover::before { opacity: 1; }
-
-    .project-lang {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .lang-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
       background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
     }
-
-    .project-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.6rem;
-    }
-
-    .project-desc {
-      font-size: 0.88rem;
+    .projeto-card:hover::before { transform: scaleX(1); }
+    .projeto-card:hover { background: #1a1a1a; }
+    .projeto-num {
+      font-size: 11px;
       color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 1.2rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
     }
-
-    .project-arrow {
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      color: var(--accent);
-      letter-spacing: 0.05em;
+    .projeto-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      transition: color 0.2s;
     }
+    .projeto-card:hover .projeto-title { color: var(--accent); }
+    .projeto-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .projeto-stack {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .projeto-arrow {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    .projeto-card:hover .projeto-arrow { color: var(--accent); }
 
     /* CONTATO */
-    #contact { background: var(--bg2); max-width: 100%; padding: 6rem 2rem; }
-
-    .contact-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .contact-grid {
+    #contato { background: var(--bg); }
+    .contato-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+      gap: 80px;
       align-items: start;
     }
-
-    .contact-info p {
+    .contato-text {
+      font-size: 14px;
       color: var(--muted);
-      margin-bottom: 2rem;
-      line-height: 1.8;
+      line-height: 1.9;
+      margin-bottom: 40px;
     }
-
-    .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
-
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      font-family: var(--mono);
-      font-size: 0.85rem;
-      color: var(--muted);
+    .contato-text strong { color: var(--text); font-weight: 500; }
+    .contato-links { display: flex; flex-direction: column; gap: 16px; }
+    .contato-link {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
       text-decoration: none;
-      transition: color 0.2s;
-      padding: 0.8rem;
-      border: 1px solid transparent;
-      border-radius: 6px;
+      color: var(--text);
+      font-size: 13px;
       transition: all 0.2s;
     }
-
-    .contact-link:hover {
-      color: var(--accent);
-      border-color: var(--border);
-      background: var(--card);
-    }
-
-    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
-
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-
-    .form-group label {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      background: var(--card);
+    .contato-link:hover { border-color: var(--accent); color: var(--accent); }
+    .contato-link-icon { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; min-width: 60px; }
+    .contato-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .form-input {
+      background: var(--bg2);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.8rem 1rem;
       color: var(--text);
-      font-family: var(--sans);
-      font-size: 0.95rem;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 12px 16px;
+      border-radius: 2px;
       outline: none;
       transition: border-color 0.2s;
-      resize: vertical;
     }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: var(--accent);
-    }
+    .form-input:focus { border-color: var(--accent); }
+    textarea.form-input { resize: vertical; min-height: 120px; }
 
     /* FOOTER */
     footer {
-      padding: 2rem;
-      text-align: center;
+      padding: 32px 48px;
       border-top: 1px solid var(--border);
-      font-family: var(--mono);
-      font-size: 0.75rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px;
       color: var(--muted);
     }
 
-    footer span { color: var(--accent); }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s, transform 0.6s;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 700px) {
-      .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
       .nav-links { display: none; }
+      #hero, section { padding-left: 24px; padding-right: 24px; }
+      .sobre-grid, .contato-grid { grid-template-columns: 1fr; gap: 40px; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .projetos-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 28px; flex-wrap: wrap; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#hero" class="nav-logo">~/andre-scher</a>
-    <ul class="nav-links">
-      <li><a href="#sobre">sobre</a></li>
-      <li><a href="#skills">skills</a></li>
-      <li><a href="#projetos">projetos</a></li>
-      <li><a href="#contact">contato</a></li>
-    </ul>
-  </nav>
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">André<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre">sobre</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#projetos">projetos</a></li>
+    <li><a href="#contato">contato</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="status-dot"></div>
+    disponível para oportunidades
+  </div>
+</nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-glow"></div>
-    <div class="hero-content">
-      <p class="hero-tag">// disponível para oportunidades</p>
-      <h1 class="hero-name">André<br><span>Scher</span></h1>
-      <p class="hero-role">Desenvolvedor Web Jr.<span class="cursor"></span></p>
-      <div class="hero-btns">
-        <a href="#projetos" class="btn btn-primary">Ver projetos</a>
-        <a href="#contact" class="btn btn-outline">Entrar em contato</a>
-      </div>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-label">// desenvolvedor back-end · PHP · Magento 2</div>
+  <h1 class="hero-name">
+    André
+    <em>Scher.</em>
+  </h1>
+  <p class="hero-role">
+    Desenvolvedor back-end júnior atuando na <strong>MageSimple</strong> com foco em <strong>PHP e Magento 2</strong>.<br>
+    Estudante de Engenharia de Software em busca de me tornar <strong>desenvolvedor full stack</strong>.
+  </p>
+  <div class="hero-cta">
+    <a href="#projetos" class="btn btn-primary">Ver projetos →</a>
+    <a href="#contato" class="btn btn-ghost">Entrar em contato</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">Jr.</div>
+      <div class="stat-label">Nível atual</div>
     </div>
-  </section>
-
-  <!-- SOBRE -->
-  <section id="sobre">
-    <p class="section-label reveal">// 01. sobre mim</p>
-    <h2 class="section-title reveal">Quem sou eu</h2>
-    <div class="about-grid reveal">
-      <div class="about-text">
-        <p>Olá! Sou <strong>André Scher</strong>, estudante de <strong>Engenharia de Software e Análise de Sistemas</strong>, apaixonado por construir coisas para a web.</p>
-        <p>Estou focado em desenvolvimento <strong>front-end</strong>, aprendendo boas práticas de código e buscando minha primeira oportunidade profissional para crescer junto a um time de verdade.</p>
-        <p>Acredito que código limpo e design acessível caminham juntos — cada linha escrita é um passo a mais na jornada.</p>
-        <br>
-        <a href="mailto:andrescher14@gmail.com" class="btn btn-primary">📧 andrescher14@gmail.com</a>
-      </div>
-      <div class="about-stats">
-        <div class="stat-card">
-          <div class="stat-num">4+</div>
-          <div class="stat-desc">Repositórios públicos</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">2026</div>
-          <div class="stat-desc">Entrando no mercado</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">100%</div>
-          <div class="stat-desc">Dedicação ao aprendizado</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">∞</div>
-          <div class="stat-desc">Vontade de evoluir</div>
-        </div>
-      </div>
+    <div>
+      <div class="stat-num">PHP</div>
+      <div class="stat-label">Foco principal</div>
     </div>
-  </section>
-
-  <!-- SKILLS -->
-  <div id="skills">
-    <p class="section-label reveal">// 02. tecnologias</p>
-    <h2 class="section-title reveal">Stack atual</h2>
-    <div class="skills-grid reveal">
-      <div class="skill-chip"><span class="skill-icon">🌐</span> HTML5</div>
-      <div class="skill-chip"><span class="skill-icon">🎨</span> CSS3</div>
-      <div class="skill-chip"><span class="skill-icon">⚡</span> JavaScript</div>
-      <div class="skill-chip"><span class="skill-icon">🐘</span> PHP</div>
-      <div class="skill-chip"><span class="skill-icon">🔀</span> Git</div>
-      <div class="skill-chip"><span class="skill-icon">🐙</span> GitHub</div>
-      <div class="skill-chip"><span class="skill-icon">📐</span> Flexbox</div>
-      <div class="skill-chip"><span class="skill-icon">🏗️</span> CSS Grid</div>
-      <div class="skill-chip"><span class="skill-icon">📱</span> Responsivo</div>
+    <div>
+      <div class="stat-num">4+</div>
+      <div class="stat-label">Repositórios</div>
+    </div>
+    <div>
+      <div class="stat-num">Full</div>
+      <div class="stat-label">Stack goal</div>
     </div>
   </div>
+</section>
 
-  <!-- PROJETOS -->
-  <section id="projetos">
-    <p class="section-label reveal">// 03. projetos</p>
-    <h2 class="section-title reveal">O que já construí</h2>
-    <div class="projects-grid reveal">
-      <a class="project-card" href="https://github.com/ScherAndre/GoogleGlass-Guanabara" target="_blank">
-        <div class="project-lang"><span class="lang-dot"></span> HTML · CSS</div>
-        <h3 class="project-title">Google Glass Clone</h3>
-        <p class="project-desc">Recriação do site do Google Glass utilizando HTML5 e CSS3 puro, com foco em estruturação semântica e estilização moderna.</p>
-        <span class="project-arrow">→ ver repositório</span>
-      </a>
-      <a class="project-card" href="https://github.com/ScherAndre/Html-treino-revisao" target="_blank">
-        <div class="project-lang"><span class="lang-dot"></span> HTML</div>
-        <h3 class="project-title">HTML Treino & Revisão</h3>
-        <p class="project-desc">Conjunto de exercícios práticos para revisão e fixação de conceitos fundamentais do HTML5 e boas práticas de marcação.</p>
-        <span class="project-arrow">→ ver repositório</span>
-      </a>
-      <a class="project-card" href="https://github.com/ScherAndre/primeiro-commit" target="_blank">
-        <div class="project-lang"><span class="lang-dot"></span> HTML</div>
-        <h3 class="project-title">Primeiro Commit</h3>
-        <p class="project-desc">Ponto de partida: primeiro repositório público, marcando o início da jornada com Git e versionamento de código.</p>
-        <span class="project-arrow">→ ver repositório</span>
-      </a>
-      <a class="project-card" href="https://github.com/ScherAndre/andre-scher-portfolio" target="_blank" style="border-color: rgba(0,229,160,0.3);">
-        <div class="project-lang"><span class="lang-dot"></span> HTML · CSS · JS</div>
-        <h3 class="project-title">Este Portfólio ✨</h3>
-        <p class="project-desc">Portfólio pessoal desenvolvido do zero com HTML, CSS e JavaScript puro. Dark mode, responsivo e sem frameworks.</p>
-        <span class="project-arrow">→ ver código-fonte</span>
-      </a>
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="section-header">
+    <span class="section-num">01.</span>
+    <h2 class="section-title">Sobre mim</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="sobre-grid">
+    <div class="sobre-text">
+      <p>
+        Sou <strong>André Scher</strong>, desenvolvedor back-end júnior atuando na
+        <strong><a href="https://www.magesimple.com.br" target="_blank" rel="noopener">MageSimple</a></strong> —
+        empresa especializada em soluções <strong>Magento 2</strong> para e-commerce.
+        No dia a dia trabalho com desenvolvimento e manutenção de funcionalidades em projetos reais de clientes em produção.
+      </p>
+      <p>
+        Curso <strong>Engenharia de Software e Análise de Sistemas</strong> e tenho foco claro em back-end com PHP,
+        expandindo progressivamente minhas competências para me tornar um desenvolvedor <strong>full stack</strong>.
+      </p>
+      <p>
+        Acredito em código limpo, aprendizado contínuo e na importância de crescer dentro de uma equipe.
+        Cada projeto é uma oportunidade de evoluir — tanto tecnicamente quanto como profissional.
+      </p>
+      <div style="margin-top: 32px;">
+        <a href="mailto:andrescher14@gmail.com" class="btn btn-ghost" style="display:inline-flex">andrescher14@gmail.com</a>
+      </div>
     </div>
-  </section>
-
-  <!-- CONTATO -->
-  <div id="contact">
-    <div class="contact-inner">
-      <p class="section-label reveal">// 04. contato</p>
-      <h2 class="section-title reveal">Vamos conversar?</h2>
-      <div class="contact-grid reveal">
-        <div class="contact-info">
-          <p>Estou em busca da minha primeira oportunidade como desenvolvedor. Se você tem um projeto interessante ou uma vaga em aberto, adoraria bater um papo!</p>
-          <div class="contact-links">
-            <a href="mailto:andrescher14@gmail.com" class="contact-link">📧 andrescher14@gmail.com</a>
-            <a href="https://www.linkedin.com/in/andre-felipe-scher-de-souza-35b694259/" target="_blank" class="contact-link">💼 LinkedIn</a>
-            <a href="https://github.com/ScherAndre" target="_blank" class="contact-link">🐙 github.com/ScherAndre</a>
-          </div>
+    <div>
+      <div class="exp-card">
+        <div class="exp-company"><a href="https://www.magesimple.com.br" target="_blank" rel="noopener">MageSimple</a></div>
+        <div class="exp-role">Desenvolvedor Júnior</div>
+        <div class="exp-period">2025 — atual · Desenvolvimento de e-commerce</div>
+        <div class="exp-desc">
+          Atuação em desenvolvimento e manutenção de funcionalidades em ambiente Magento 2.
+          Contato diário com PHP no contexto de plataformas de e-commerce enterprise,
+          trabalhando em projetos reais de clientes em produção.
         </div>
-        <div class="contact-form">
-          <div class="form-group">
-            <label>Nome</label>
-            <input type="text" placeholder="Seu nome" />
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="seu@email.com" />
-          </div>
-          <div class="form-group">
-            <label>Mensagem</label>
-            <textarea rows="4" placeholder="Olá André, gostaria de..."></textarea>
-          </div>
-          <a href="mailto:andrescher14@gmail.com" class="btn btn-primary">Enviar mensagem</a>
+        <div class="exp-tags">
+          <span class="tag accent">PHP</span>
+          <span class="tag accent">Magento 2</span>
+          <span class="tag accent2">E-commerce</span>
+          <span class="tag">Git</span>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>Feito com <span>♥</span> por André Scher · 2026</p>
-  </footer>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">02.</span>
+    <h2 class="section-title">Habilidades</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">Back-End · foco principal</div>
+      <div class="skill-item">
+        <span>PHP</span>
+        <div class="skill-level">
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot"></div>
+          <div class="skill-dot"></div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <span>Magento 2</span>
+        <div class="skill-level">
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot"></div>
+          <div class="skill-dot"></div>
+          <div class="skill-dot"></div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <span>Lógica de programação</span>
+        <div class="skill-level">
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot"></div>
+        </div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Front-End</div>
+      <div class="skill-item">
+        <span>HTML5</span>
+        <div class="skill-level">
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot"></div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <span>CSS3</span>
+        <div class="skill-level">
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot"></div>
+          <div class="skill-dot"></div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <span>JavaScript</span>
+        <div class="skill-level">
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot"></div>
+          <div class="skill-dot"></div>
+          <div class="skill-dot"></div>
+        </div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Ferramentas</div>
+      <div class="skill-item">
+        <span>Git</span>
+        <div class="skill-level">
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot"></div>
+          <div class="skill-dot"></div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <span>GitHub</span>
+        <div class="skill-level">
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot"></div>
+          <div class="skill-dot"></div>
+        </div>
+      </div>
+      <div class="skill-item">
+        <span>VS Code</span>
+        <div class="skill-level">
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot filled"></div>
+          <div class="skill-dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        }
-      });
-    }, { threshold: 0.1 });
-    reveals.forEach(el => observer.observe(el));
+<!-- PROJETOS -->
+<section id="projetos">
+  <div class="section-header">
+    <span class="section-num">03.</span>
+    <h2 class="section-title">Projetos</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projetos-grid">
+    <a class="projeto-card" href="https://github.com/ScherAndre/GoogleGlass-Guanabara" target="_blank" rel="noopener">
+      <div class="projeto-num">001</div>
+      <div class="projeto-title">Google Glass Clone</div>
+      <div class="projeto-desc">
+        Interface web desenvolvida com HTML5 e CSS3 puro. Foco em estruturação semântica, layout e estilização moderna sem o uso de frameworks.
+      </div>
+      <div class="projeto-stack">
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+      </div>
+      <div class="projeto-arrow">→ ver repositório</div>
+    </a>
+    <a class="projeto-card" href="https://github.com/ScherAndre/Html-treino-revisao" target="_blank" rel="noopener">
+      <div class="projeto-num">002</div>
+      <div class="projeto-title">HTML Treino & Revisão</div>
+      <div class="projeto-desc">
+        Repositório de exercícios práticos e revisão de fundamentos de HTML5. Consolidação de boas práticas de marcação com versionamento Git.
+      </div>
+      <div class="projeto-stack">
+        <span class="tag">HTML5</span>
+        <span class="tag">Git</span>
+      </div>
+      <div class="projeto-arrow">→ ver repositório</div>
+    </a>
+    <a class="projeto-card" href="https://github.com/ScherAndre/primeiro-commit" target="_blank" rel="noopener">
+      <div class="projeto-num">003</div>
+      <div class="projeto-title">Primeiro Commit</div>
+      <div class="projeto-desc">
+        Ponto de partida da jornada: primeiro repositório público com versionamento Git. Marco inicial no desenvolvimento de software.
+      </div>
+      <div class="projeto-stack">
+        <span class="tag">HTML</span>
+        <span class="tag">Git</span>
+      </div>
+      <div class="projeto-arrow">→ ver repositório</div>
+    </a>
+    <a class="projeto-card" href="https://github.com/ScherAndre/andre-scher-portfolio" target="_blank" rel="noopener">
+      <div class="projeto-num">004</div>
+      <div class="projeto-title">Este Portfólio</div>
+      <div class="projeto-desc">
+        Portfólio pessoal desenvolvido do zero com HTML, CSS e JavaScript puro. Responsivo, sem frameworks e com foco em performance e clareza.
+      </div>
+      <div class="projeto-stack">
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag">JavaScript</span>
+      </div>
+      <div class="projeto-arrow">→ ver código-fonte</div>
+    </a>
+  </div>
+</section>
 
-    // Typewriter effect
-    const roles = ['Desenvolvedor Web Jr.', 'Estudante de Eng. Software', 'Entusiasta de Front-End'];
-    let roleIdx = 0, charIdx = 0, deleting = false;
-    const roleEl = document.querySelector('.hero-role');
+<!-- CONTATO -->
+<section id="contato">
+  <div class="section-header">
+    <span class="section-num">04.</span>
+    <h2 class="section-title">Contato</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contato-grid">
+    <div>
+      <p class="contato-text">
+        Estou aberto a novas oportunidades como desenvolvedor back-end ou full stack.
+        Se você tem um projeto interessante, uma vaga em aberto ou quer trocar uma ideia sobre tecnologia,
+        <strong>vamos conversar.</strong>
+      </p>
+      <div class="contato-links">
+        <a href="mailto:andrescher14@gmail.com" class="contato-link">
+          <span class="contato-link-icon">email</span>
+          andrescher14@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/andre-felipe-scher-de-souza-35b694259/" target="_blank" rel="noopener" class="contato-link">
+          <span class="contato-link-icon">linkedin</span>
+          André Felipe Scher de Souza
+        </a>
+        <a href="https://github.com/ScherAndre" target="_blank" rel="noopener" class="contato-link">
+          <span class="contato-link-icon">github</span>
+          github.com/ScherAndre
+        </a>
+      </div>
+    </div>
+    <form class="contato-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label class="form-label" for="nome">Nome</label>
+        <input class="form-input" type="text" id="nome" name="nome" placeholder="Seu nome" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-input" type="email" id="email" name="email" placeholder="seu@email.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="mensagem">Mensagem</label>
+        <textarea class="form-input" id="mensagem" name="mensagem" placeholder="Sua mensagem..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="align-self:flex-start">Enviar mensagem →</button>
+    </form>
+  </div>
+</section>
 
-    function typewrite() {
-      const current = roles[roleIdx];
-      if (!deleting) {
-        charIdx++;
-        roleEl.innerHTML = current.slice(0, charIdx) + '<span class="cursor"></span>';
-        if (charIdx === current.length) { deleting = true; setTimeout(typewrite, 2000); return; }
-      } else {
-        charIdx--;
-        roleEl.innerHTML = current.slice(0, charIdx) + '<span class="cursor"></span>';
-        if (charIdx === 0) { deleting = false; roleIdx = (roleIdx + 1) % roles.length; }
+<!-- FOOTER -->
+<footer>
+  <span>André Scher · Desenvolvedor Back-End · 2026</span>
+  <span>PHP · Magento 2 · em direção ao full stack</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.style.opacity = '1';
+        el.target.style.transform = 'translateY(0)';
       }
-      setTimeout(typewrite, deleting ? 50 : 80);
-    }
-    setTimeout(typewrite, 1200);
-  </script>
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.exp-card, .skill-group, .projeto-card, .contato-link').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+
+  // Form submit → mailto
+  function handleSubmit(e) {
+    e.preventDefault();
+    const nome = document.getElementById('nome').value;
+    const email = document.getElementById('email').value;
+    const msg = document.getElementById('mensagem').value;
+    const body = encodeURIComponent(`De: ${nome} (${email})\n\n${msg}`);
+    window.location.href = `mailto:andrescher14@gmail.com?subject=Contato via portfólio&body=${body}`;
+  }
+</script>
 </body>
 </html>
